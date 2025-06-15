@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/ lib/
+# Build
+out/ artifacts/ cache/ target/ dist/ build/
+# Env
+.env .env.local
+# IDE
+.vscode/ .idea/
+# OS
+.DS_Store
+# Python
+__pycache__/ *.pyc .venv/
