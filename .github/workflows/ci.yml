@@ -1,0 +1,23 @@
+name: Atlas CI
+on: [push, pull_request]
+jobs:
+  solidity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: forge build --sizes && forge test -vvv
+  python-sdk:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: {python-version: ["3.11", "3.12"]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "${{ matrix.python-version }}"}
+      - run: pip install pytest && pytest sdk/python/ -v
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install ruff && ruff check sdk/ runtime/ cli/ scripts/

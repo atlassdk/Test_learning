@@ -1,0 +1,13 @@
+name: Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      environment: {required: true, type: choice, options: [testnet, mainnet]}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: forge script scripts/deploy/DeployAtlas.s.sol --rpc-url ${{ secrets.RPC_URL }} --private-key ${{ secrets.DEPLOYER_KEY }} --broadcast --verify

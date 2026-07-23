@@ -1,0 +1,11 @@
+name: Audit
+on:
+  schedule: [{cron: '0 0 * * 0'}]
+  workflow_dispatch:
+jobs:
+  slither:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: crytic/slither-action@v0.3
+        with: {target: contracts/, fail-on: high}
